@@ -1,0 +1,16 @@
+---
+title: 狂鸟飞车 校验码创建文件失败修复
+published: 2025-10-15
+description: 解决狂鸟飞车校验码创建文件失败的问题
+tags: [狂鸟飞车校验码, 修复]
+category: 狂鸟飞车
+draft: false
+---
+
+<span style="color: red;">出现校验码失败，是因为程序无法自动生成文件。</span>
+
+<span style="color: red;">解决方法：使用以下链接替换：</span>
+
+`https://pan.baidu.com/s/1mtAizOGbHa_IZFDIk-Zb-g?pwd=h4fk`
+
+![校验码修复示意图](/assets/images/666.png)
