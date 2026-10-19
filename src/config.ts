@@ -56,7 +56,7 @@ export const navBarConfig: NavBarConfig = {
 		},
 		{
 			name: "GitHub",
-			url: "https://github.com/saicaca/fuwari", // 内部链接不应包含基础路径，因为会自动添加
+			url: "https://github.com/LigeLoveRosita/lizi-blog", // 内部链接不应包含基础路径，因为会自动添加
 			external: true, // 显示外部链接图标并在新标签页打开
 		},
 	],
@@ -82,7 +82,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
-			url: "https://github.com/saicaca/fuwari",
+			url: "https://github.com/LigeLoveRosita/lizi-blog",
 		},
 	],
 };
