@@ -1,0 +1,8 @@
+https://vpm.vrczh.org/vpm/official
+https://vpm.hazyshore.com/vpm/poiyomi/vpm.json
+https://vpm.vrczh.org/vpm/curated
+https://vpm.nadena.dev/vpm.json
+https://vcc.vrcfury.com/
+https://lilxyzw.github.io/vpm-repos/vpm.json
+https://vpm.thry.dev/index.json
+https://vpm.hazyshore.com/vpm/kurotu/vpm.json
