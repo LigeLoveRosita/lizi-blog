@@ -2,7 +2,6 @@
 title: Veyra 如何给 GTA6 在 PS5 上帧生成（需要采集卡）
 published: 2026-11-16
 description: 用采集卡把 PS5 的 GTA6 画面送进 PC，再用 Veyra 实时超分 + 补帧到 120 帧：链路、硬件清单、设置顺序和延迟代价。
-image: /assets/images/veyra/01-chain.jpg
 tags: [Veyra, GTA6, 采集卡, 帧生成, PS5]
 category: 游戏优化
 draft: false
@@ -29,8 +28,6 @@ Veyra（全名 Veyra-NRVideo，开源项目，见 [GitHub](https://github.com/Li
 ```text
 PS5 ──HDMI 2.1──> 采集卡 ──USB 3.2──> PC（Veyra：超分 + 降噪 + 补帧）──HDMI/DP──> 显示器/电视
 ```
-
-![Veyra 帧生成链路总览：PS5 经采集卡进 PC，再输出到显示器](/assets/images/veyra/01-chain.jpg "图 1　整条链路：PS5 → 采集卡 → PC（Veyra）→ 显示器")
 
 PS5 输出的 30 帧（GTA6 在主机上的目标帧率）进入 PC，Veyra 按 2x / 3x / 4x 插帧，输出 60 / 90 / 120 帧。
 
@@ -64,15 +61,17 @@ PS5 的 HDMI 进采集卡，采集卡的 USB 接 PC。先不要开 Veyra，直�
 - HDR：先关。多数采集卡不支持 HDR 直通，开了会发灰或黑屏，等链路稳定后再试
 - VRR：采集卡不支持就关掉
 
-![PS5 画面输出设置：2160p、120Hz、关闭 HDR 与 HDCP](/assets/images/veyra/02-ps5-output.jpg "图 2　PS5 端设置：分辨率 / 120Hz / 关 HDR / 关 HDCP")
-
 ### 3. Veyra 里选输入源
 
-打开 Veyra，把输入源切到采集卡设备，分辨率/帧率跟 PS5 输出对齐。
+打开 Veyra，把输入源切到采集卡设备，分辨率/帧率自己选，输出分辨率会跟你的显示器或电脑走。
+
+![Veyra 主界面：输入源卡片里选「采集卡」](/assets/images/veyra/01-home.png "图 1　Veyra 主界面：输入源选「采集卡」")
+
+![采集卡设置：设备选自己的采集卡，分辨率 / 帧率自己选](/assets/images/veyra/02-capture-card.png "图 2　采集卡设置：设备选你自己的（比如博主的 Elgato 4K X），输出分辨率跟显示器或电脑走，再连接并开始")
 
 **第一次用，把所有增强效果全部关掉。** 先确认这一路信号在 Veyra 里是稳定、不撕裂、不闪的。开发者自己也是这么建议的：从零效果开始，再一项一项加。
 
-![Veyra 输入源切到采集卡，增强效果先全部关闭](/assets/images/veyra/03-veyra-source.jpg "图 3　输入源选采集卡，先跑通再开效果")
+![连接采集卡后：信号已识别，增强全部关闭，先确认基础画面](/assets/images/veyra/03-connected.png "图 3　连接采集卡后：2160p30 信号已识别，增强全部关闭，先确认基础画面稳定")
 
 ### 4. 逐项打开增强
 
@@ -82,9 +81,11 @@ PS5 的 HDMI 进采集卡，采集卡的 USB 接 PC。先不要开 Veyra，直�
 2. **降噪 / 画质增强**：抵消采集和压缩带来的噪点
 3. **帧生成**：最后开。倍率从 2x 开始，30 → 60 能稳住再往 3x、4x 试
 
+![补帧设置：方式选 DLSS 帧生成，运动来源选光流，倍率从 2X 起步](/assets/images/veyra/04-framegen-dlss.png "图 4　补帧设置：补帧方式选 DLSS 帧生成，运动来源选光流，倍率从 2X 起步")
+
 任何一项开下去 GPU 直接 99% 并且掉帧，就退回来降一档。别指望四项全开还能 4K120。
 
-![增强管线：超分辨率 → 降噪 → 帧生成，逐项叠加](/assets/images/veyra/04-enhance-pipeline.jpg "图 4　增强顺序：超分 → 降噪 → 补帧，每开一项看 GPU 占用")
+![补帧方式下拉：RTX 30 / 40 / 50 系显卡选 NVIDIA VFG（顶级补帧质量）](/assets/images/veyra/05-framegen-vfg.png "图 5　RTX 30 / 40 / 50 系显卡补帧方式选 NVIDIA VFG（顶级补帧质量）")
 
 ### 5. 校准延迟
 
@@ -93,8 +94,6 @@ PS5 的 HDMI 进采集卡，采集卡的 USB 接 PC。先不要开 Veyra，直�
 - PS5 输出延迟
 - 采集卡处理 + USB 传输：几十毫秒量级，卡越便宜越明显
 - Veyra 的增强 + 补帧：多缓存 1~2 帧
-
-![延迟构成：PS5 输出、采集卡、补帧缓存三块叠加](/assets/images/veyra/05-latency.jpg "图 5　延迟三块叠加，真正的大头是采集卡")
 
 120 帧下 1 帧只有 8.3ms，所以补帧本身的代价不大，**真正的大头是采集卡**。如果手感明显拖沓，优先怀疑采集卡和它的 USB 带宽。
 
