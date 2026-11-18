@@ -51,7 +51,7 @@ const enabled = Boolean(commentConfig?.serverURL);
             if (document.querySelector('link[data-waline]')) return;
             const link = document.createElement("link");
             link.rel = "stylesheet";
-            link.href = "https://unpkg.com/@waline/client@3/dist/waline.css";
+            link.href = "/assets/waline/waline.css";
             link.dataset.waline = "1";
             document.head.appendChild(link);
         }
@@ -61,19 +61,17 @@ const enabled = Boolean(commentConfig?.serverURL);
             if (!el || inited || !serverURL) return;
             inited = true;
             loadCss();
-            const s = document.createElement("script");
-            s.src = "https://unpkg.com/@waline/client@3/dist/waline.js";
-            s.async = true;
-            s.onload = () => {
-                window.Waline.init({
-                    el: "#waline-container",
-                    serverURL: serverURL,
-                    pageview: true,
-                    dark: "html.dark",
-                    locale: "zh-CN",
-                });
-            };
-            document.body.appendChild(s);
+            import("/assets/waline/waline.js")
+                .then((Waline) => {
+                    Waline.init({
+                        el: "#waline-container",
+                        serverURL: serverURL,
+                        pageview: true,
+                        dark: "html.dark",
+                        locale: "zh-CN",
+                    });
+                })
+                .catch((err) => console.error("Waline load failed:", err));
         }
 
         // 首次加载 + Swup 页面切换（@swup/astro 派发 astro:page-load）
