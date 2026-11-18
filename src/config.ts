@@ -1,4 +1,5 @@
 import type {
+	CommentConfig,
 	ExpressiveCodeConfig,
 	LicenseConfig,
 	NavBarConfig,
@@ -97,4 +98,10 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// 注意：某些样式（如背景色）正在被覆盖，请查看 astro.config.mjs 文件
 	// 请选择一个深色主题，因为此博客主题目前仅支持深色背景
 	theme: "github-dark",
+};
+
+export const commentConfig: CommentConfig = {
+	// Waline 评论系统服务端地址，部署好后填进来，例如 "https://lizi-blog-comment.vercel.app"
+	// 留空 "" 则文章页不显示评论区
+	serverURL: "",
 };

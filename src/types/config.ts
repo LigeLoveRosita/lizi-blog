@@ -102,3 +102,8 @@ export type BlogPostData = {
 export type ExpressiveCodeConfig = {
 	theme: string;
 };
+
+export type CommentConfig = {
+	/** Waline 服务端地址，例如 https://your-waline.vercel.app；留空则不渲染评论区 */
+	serverURL: string;
+};

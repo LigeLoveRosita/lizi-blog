@@ -1,0 +1,84 @@
+---
+/**
+ * Waline 评论组件（客户端加载，静态页兼容）
+ * 服务端地址在 src/config.ts 的 commentConfig.serverURL 配置；
+ * serverURL 为空字符串时整个评论区不渲染。
+ */
+import { Icon } from "astro-icon/components";
+import { commentConfig } from "../config";
+import { i18n } from "@i18n/translation";
+import I18nKey from "@i18n/i18nKey";
+
+export interface Props {
+    class?: string;
+}
+const { class: className } = Astro.props;
+
+const enabled = Boolean(commentConfig?.serverURL);
+---
+
+{enabled && (
+    <div class:list={["card-base rounded-[var(--radius-large)] px-6 md:px-9 py-6 mb-4 onload-animation", className]}>
+        <div class="flex items-center gap-3 mb-4 text-xl font-bold text-black/90 dark:text-white/90">
+            <div class="transition h-8 w-8 rounded-lg bg-black/5 dark:bg-white/10 text-[var(--primary)] flex items-center justify-center">
+                <Icon name="material-symbols:forum-outline-rounded" />
+            </div>
+            <span>{i18n(I18nKey.comments)}</span>
+        </div>
+        <div id="waline-container" />
+    </div>
+)}
+
+<style>
+    #waline-container {
+        --waline-theme-color: var(--primary);
+        --waline-active-color: var(--primary);
+    }
+    html.dark #waline-container {
+        --waline-bgcolor: transparent;
+        --waline-bgcolor1: rgba(255, 255, 255, 0.05);
+        --waline-bgcolor2: rgba(255, 255, 255, 0.08);
+        --waline-color: rgba(255, 255, 255, 0.85);
+        --waline-border-color: rgba(255, 255, 255, 0.1);
+    }
+</style>
+
+<script define:vars={{ serverURL: commentConfig?.serverURL ?? "" }}>
+    (function () {
+        let inited = false;
+
+        function loadCss() {
+            if (document.querySelector('link[data-waline]')) return;
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = "https://unpkg.com/@waline/client@3/dist/waline.css";
+            link.dataset.waline = "1";
+            document.head.appendChild(link);
+        }
+
+        function render() {
+            const el = document.getElementById("waline-container");
+            if (!el || inited || !serverURL) return;
+            inited = true;
+            loadCss();
+            const s = document.createElement("script");
+            s.src = "https://unpkg.com/@waline/client@3/dist/waline.js";
+            s.async = true;
+            s.onload = () => {
+                window.Waline.init({
+                    el: "#waline-container",
+                    serverURL: serverURL,
+                    pageview: true,
+                    dark: "html.dark",
+                    locale: "zh-CN",
+                });
+            };
+            document.body.appendChild(s);
+        }
+
+        // 首次加载 + Swup 页面切换（@swup/astro 派发 astro:page-load）
+        document.addEventListener("astro:page-load", render);
+        if (document.readyState !== "loading") render();
+        else document.addEventListener("DOMContentLoaded", render);
+    })();
+</script>
