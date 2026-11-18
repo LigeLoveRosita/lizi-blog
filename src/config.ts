@@ -103,5 +103,5 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 export const commentConfig: CommentConfig = {
 	// Waline 评论系统服务端地址，部署好后填进来，例如 "https://lizi-blog-comment.vercel.app"
 	// 留空 "" 则文章页不显示评论区
-	serverURL: "",
+	serverURL: "https://ht.lizi.click",
 };
